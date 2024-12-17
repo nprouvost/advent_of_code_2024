@@ -147,8 +147,9 @@ def main():
                         # first mixed move (-1 common move), so the difference is (1000 - 1) = 999
                         # however, this caveat is too broad, so we need to check if the two paths are really
                         # good paths, add a few checks -> the next move should add 1001 to the distance
-                        # of the smaller path it should belong to the set of paths positions already found
+                        # of the smaller path and it should belong to the set of paths positions already found
                         # in the previous step
+                        # (we assume that it does not happen that one path is one turn less but 1000 steps longer)
                         if (distance_dict[new_position] == (distance_dict[position] + 999)):
                             test_position = (position[0] - direction[0], position[1] - direction[1])
                             if (test_position in set_visited):
