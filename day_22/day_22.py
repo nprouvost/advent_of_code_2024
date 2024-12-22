@@ -1,6 +1,4 @@
 # whatever imports you need
-import functools
-import numpy as np
 
 
 # create example code:

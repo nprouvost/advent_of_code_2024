@@ -39,7 +39,7 @@ def check_left(line: str, i: int, j: int, word: str):
     return 0
 
 
-def check_down(lines_array: list, i: int, j: int, word: str):
+def check_down(lines_array, i, j, word):
     word_len = len(word)
     if i < len(lines_array) - (word_len - 1):
         if "".join(lines_array[i:i + word_len, j]) == word:
@@ -47,10 +47,10 @@ def check_down(lines_array: list, i: int, j: int, word: str):
     return 0
 
 
-def check_up(lines_array: list, i: int, j: int, word: str):
+def check_up(lines_array, i, j, word):
     word_len = len(word)
     if i > word_len - 2:
-        if "".join(lines_array[i - (word_len-1):i + 1, j]) == word[::-1]:
+        if "".join(lines_array[i - (word_len - 1):i + 1, j]) == word[::-1]:
             return 1
     return 0
 

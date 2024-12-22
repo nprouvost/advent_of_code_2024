@@ -1,5 +1,4 @@
 # whatever imports you need
-from itertools import combinations
 import numpy as np
 
 
@@ -61,19 +60,14 @@ def main():
         positions[position] = np.array(positions[position])
 
     # start shuffling values according to the new file-compacting system
-    # print("positions", positions)
     file_id_to_move = max(positions.keys())
     moveable_blocks = len(positions[file_id_to_move])
-    # print("moveable_blocks", moveable_blocks)
-    # print("file_id_to_move", file_id_to_move)
     for infree, nfree in enumerate(free_array):
         if nfree == 0:
             continue
         if (free_positions[0] > max(positions[file_id_to_move])):
-            # print("free_positions[0] > max(positions[file_id_to_move])", free_positions[0], max(positions[file_id_to_move]))
             break
         if nfree > moveable_blocks:
-            # print("nfree > moveable_blocks", nfree, moveable_blocks)
             while nfree > moveable_blocks:
                 positions[file_id_to_move] = np.sort(positions[file_id_to_move])[::-1]
                 positions[file_id_to_move][:moveable_blocks] = free_positions[:moveable_blocks]
@@ -82,15 +76,11 @@ def main():
                 file_id_to_move = get_next_file_id(positions, file_id_to_move)
                 moveable_blocks = len(positions[file_id_to_move])
         if nfree < moveable_blocks:
-            # print("nfree < moveable_blocks", nfree, moveable_blocks)
-            # print("positions", positions)
             positions[file_id_to_move] = np.sort(positions[file_id_to_move])[::-1]
             positions[file_id_to_move][:nfree] = free_positions[:nfree]
-            # print("positions", positions)
             free_positions = free_positions[nfree:]
             moveable_blocks -= nfree
         elif nfree == moveable_blocks:
-            # print("nfree == moveable_blocks", nfree, moveable_blocks)
             positions[file_id_to_move] = np.sort(positions[file_id_to_move])[::-1]
             positions[file_id_to_move][:nfree] = free_positions[:nfree]
             free_positions = free_positions[nfree:]
@@ -99,7 +89,7 @@ def main():
 
     checksum_res = 0
     for position in positions.keys():
-        checksum_res += sum(positions[position]*position)
+        checksum_res += sum(positions[position] * position)
     print("the checksum is", checksum_res)
 
     # part 2
@@ -151,7 +141,7 @@ def main():
     # print("positions", positions)
     checksum_res = 0
     for position in positions.keys():
-        checksum_res += sum(positions[position]*position)
+        checksum_res += sum(positions[position] * position)
     print("the checksum is", checksum_res)
 
 

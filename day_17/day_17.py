@@ -155,7 +155,7 @@ def main():
         registers["Register C"] = 0
         instruction_pointer = 0
         while instruction_pointer < len(program):
-            instruction_pointer, registers, program, output = execute_instruction(instruction_pointer, registers, program)
+            instruction_pointer, registers, program, output = execute_instruction(instruction_pointer, registers, program)  # noqa
             total_output += output
 
         if new_value > 2**45 + 2**42:
