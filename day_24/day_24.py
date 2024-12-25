@@ -1,10 +1,7 @@
 # whatever imports you need
-from itertools import combinations
 import numpy as np
 
 from dataclasses import dataclass
-
-from time import time
 
 
 # create example code:
@@ -92,7 +89,6 @@ example3 = [
     "x04 AND y04 -> z04",
     "x05 AND y05 -> z00",
 ]
-
 
 
 @dataclass
@@ -190,9 +186,6 @@ def main():
     # third bit and so on -> loop of second bit
     # ...
 
-
-    all_x_inputs = sorted([key for key in inputs.keys() if key.startswith('x')])
-    all_y_inputs = sorted([key for key in inputs.keys() if key.startswith('y')])
     def build_circuit(inputs_, gates_):
         all_used_gates = []
         wrong_wires = []
@@ -232,7 +225,7 @@ def main():
             AND_carry_bit_XOR_new_bit_output = ""
             new_carry_bit = ""
 
-            current_bit = str(int(current_bit) + 1) if len(str(int(current_bit) + 1)) > 1 else "0" + str(int(current_bit) + 1)
+            current_bit = str(int(current_bit) + 1) if len(str(int(current_bit) + 1)) > 1 else "0" + str(int(current_bit) + 1)  # noqa
             for gate in unused_gates:
                 if {gate.input_1, gate.input_2} == {f"x{current_bit}", f"y{current_bit}"}:
                     if gate.operation == "XOR":
@@ -296,7 +289,7 @@ def main():
                         if carry_bit_previous_bit in {gate.input_1, gate.input_2}:
                             if gate.operation == "XOR" and gate.output == f"z{current_bit}":
                                 for jgate, gate2 in enumerate(unused_gates):
-                                    if carry_bit_previous_bit in {gate2.input_1, gate2.input_2} and gate2.operation == "AND":
+                                    if carry_bit_previous_bit in {gate2.input_1, gate2.input_2} and gate2.operation == "AND":  # noqa
                                         new_list = list({gate2.input_1, gate2.input_2})
                                         new_list.remove(carry_bit_previous_bit)
                                         actual_XOR_new_bit_output = new_list[0]
@@ -336,8 +329,8 @@ def main():
                             AND_carry_bit_XOR_new_bit_output = gate.output
                             potential_used_gates.append(gate)
 
-            # we still need to find the carry bit of the new bit and check if AND_new_bit_output and AND_carry_bit_XOR_new_bit_output
-            # are correctly wired
+            # we still need to find the carry bit of the new bit and check if AND_new_bit_output
+            # and AND_carry_bit_XOR_new_bit_output are correctly wired
             for igate, gate in enumerate(unused_gates):
                 if {gate.input_1, gate.input_2} == {AND_new_bit_output, AND_carry_bit_XOR_new_bit_output}:
                     if gate.operation == "OR":
@@ -352,7 +345,7 @@ def main():
                             new_list.remove(AND_new_bit_output)
                             potential_and_old_carry_bit_mix_new_output = new_list[0]
                             potential_new_carry_bit = gate.output
-                            next_bit = str(int(current_bit) + 1) if len(str(int(current_bit) + 1)) > 1 else "0" + str(int(current_bit) + 1)
+                            next_bit = str(int(current_bit) + 1) if len(str(int(current_bit) + 1)) > 1 else "0" + str(int(current_bit) + 1)  # noqa
                             # check that the potential carry bit is used for the new output bit
                             # ignore the case where the new output bit is wrongly wired on top of the old carry bit
                             for jgate, gate2 in enumerate(unused_gates):
@@ -360,7 +353,7 @@ def main():
                                     (potential_new_carry_bit in {gate2.input_1, gate2.input_2}) and
                                     (gate2.operation == "XOR") and
                                     (gate2.output == f"z{next_bit}")
-                                    ):
+                                ):
                                     # now we are "sure" that the potential_new_carry_bit is the carry bit of the new bit
                                     # so we need to exchange wires for AND_carry_bit_XOR_new_bit_output
                                     for kgate, gate3 in enumerate(unused_gates):
@@ -382,7 +375,7 @@ def main():
                                 new_list.remove(AND_carry_bit_XOR_new_bit_output)
                                 potential_new_bit_output = new_list[0]
                                 potential_new_carry_bit = gate.output
-                                next_bit = str(int(current_bit) + 1) if len(str(int(current_bit) + 1)) > 1 else "0" + str(int(current_bit) + 1)
+                                next_bit = str(int(current_bit) + 1) if len(str(int(current_bit) + 1)) > 1 else "0" + str(int(current_bit) + 1)  # noqa
                                 # check that the potential carry bit is used for the new output bit
                                 # ignore the case where the new output bit is wrongly wired on top of the old carry bit
                                 for jgate, gate2 in enumerate(unused_gates):
@@ -390,9 +383,9 @@ def main():
                                         potential_new_bit_output in {gate2.input_1, gate2.input_2} and
                                         gate2.operation == "XOR" and
                                         gate2.output == f"z{next_bit}"
-                                        ):
-                                        # now we are "sure" that the potential_new_carry_bit is the carry bit of the new bit
-                                        # so we need to exchange wires for AND_new_bit_output
+                                    ):
+                                        # now we are "sure" that the potential_new_carry_bit is the carry bit of
+                                        # the new bit so we need to exchange wires for AND_new_bit_output
                                         for kgate, gate3 in enumerate(unused_gates):
                                             if gate3.output == AND_new_bit_output:
                                                 wrong_wires.append(gate3.output)
