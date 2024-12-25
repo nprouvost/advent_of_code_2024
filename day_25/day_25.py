@@ -1,16 +1,5 @@
 # whatever imports you need
-from itertools import combinations
 import numpy as np
-
-
-# create example code:
-example = [
-    "2333133121414131402",
-]
-
-example2 = [
-    "12345",
-]
 
 
 # read file to list of lines
@@ -23,7 +12,6 @@ def read_file_to_list(file_path):
 def main():
     file_path = 'day_25.txt'
     lines_array = read_file_to_list(file_path)
-    # lines_array = example
 
     i = 0
     keys = []
